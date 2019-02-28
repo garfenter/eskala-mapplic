@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 			else this.el.addClass('mapplic-routes-fromfixed');
 
 			this.toselect = $('<div></div>').addClass('mapplic-routes-select').appendTo(this.el);
-			$('<small>Â¿Hacia a dÃ³nde quieres ir?:</small>').appendTo(this.toselect);
+			$('<small>¿Hacia donde quieres ir?</small>').appendTo(this.toselect);
 			$('<div></div').appendTo(this.toselect);
 
 
@@ -288,6 +288,7 @@ jQuery(document).ready(function($) {
 			}
 
 			// last or only floor
+			MapplicInstance.tooltip.show(MapplicInstance.actualLocation);
 			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid);
 		}
 
@@ -297,7 +298,6 @@ jQuery(document).ready(function($) {
 				self.switchLevel(fid);
 				var path = s.drawPath(subpath, dist),
 					bbox = path[0].getBBox();
-				self.moveTo((bbox.x + bbox.width/2) / self.contentWidth, (bbox.y + bbox.height/2) / self.contentHeight, s.bboxZoom(bbox));
 			}, dur * 10 / s.o.speed + s.timeouts.length * 600); // 600ms delay
 			s.timeouts.push(t);
 		}

@@ -3,14 +3,14 @@
  * Version 5.0
  * https://www.mapplic.com/
  */
-
+var MapplicInstance;
 ;(function($) {
 	"use strict";
 
 	var Mapplic = function(element) {
 
 		var self = this;
-
+		MapplicInstance = self;
 		self.o = {
 			source: 'locations.json',
 			selector: '[id^=landmark] > *, svg > #items > *',
@@ -39,7 +39,7 @@
 			autopopulate: false,
 			alphabetic: false,
 			maxscale: 3,
-			zoom: true,
+			zoom: false,
 			zoommargin: 200,
 			developer: false
 		};
@@ -164,7 +164,7 @@
 				
 					// making it visible
 					this.el.stop().show();
-					if (self.o.zoom) this.zoom(location);
+					//if (self.o.zoom) this.zoom(location);
 				}
 			}
 
@@ -679,6 +679,8 @@
 				var item = $('<li></li>').addClass('mapplic-list-location').attr('data-location', location.id).click(function(e){
 					var routeIcon = $(this).find('.mapplic-routes-icon');
 					if(routeIcon.length > 0) {
+						e.preventDefault();
+						self.actualLocation = location;
 						routeIcon[0].click();
 					}
 				});
@@ -1667,8 +1669,8 @@
 					self.lightbox.showImage(location);
 					break;
 				default:
-					self.switchLevel(location.level);
-					self.tooltip.show(location);
+					//self.switchLevel(location.level);
+					//self.tooltip.show(location);
 			}
 
 			// active state
