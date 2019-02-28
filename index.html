@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Meta -->
+		<meta charset="utf-8">
+		<title>Directorio Eskala Roosevelt</title>
+		<!-- Viewport for Responsivity -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<meta name="description" content="Directorio Eskala Roosevelt">
+		<meta name="mobile-web-app-capable" content="yes">
+		<!--<meta http-equiv="refresh" content="240;URL=https://www.publimovil.app/pauta.html" >-->
+		<!-- Stylesheets -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<link rel="stylesheet" type="text/css" href="/mapplic/mapplic.css">
+		<link rel="stylesheet" type="text/css" href="/routes/css/mapplic-routes.css">
+	</head>
+		<body>
+		<img src="/roosevelt-logo.png" class="cabecera">
+		<div id="wrap">
+			<!-- Site header -->
+			<!-- Site content -->
+			<div id="content">
+				<section id="map-section" class="inner over">
+					<div class="map-container">
+						<!-- Map -->
+						<div id="mapplic" class="mapplic-routes mapplic-fullscreen"></div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- Scripts -->
+		<script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/hammer.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.mousewheel.js"></script>
+		<script type="text/javascript" src="/js/script.js"></script>
+		<script type="text/javascript" src="/js/csvparser.js"></script>
+		<script type="text/javascript" src="/routes/js/mapplic-routes.js"></script>
+		<!-- Required for CSV Support -->
+		<script type="text/javascript" src="/mapplic/mapplic.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var mapplic = $('#mapplic').mapplic({
+					source: 'mall.json',	// Using mall.json file as map data
+					sidebar: true, 			// Enable sidebar
+					height: 1080,
+					minimap: false,
+					marker: 'true', 		// Disable markers
+					fillcolor: false, 		// Disable default fill color
+					fullscreen: true, 		// Enable fullscreen 
+					developer: false,
+					thumbholder: true,
+					zoom: true,
+					maxscale: 1.2
+				});
+			});
+		</script>
+	</body>
+</html>
