@@ -62,8 +62,8 @@ jQuery(document).ready(function($) {
 			this.button = $('<a></a>').attr('href', '#').addClass('mapplic-button mapplic-routes-button').appendTo(self.container.el);
 			this.button.on('click touchstart', function(e) {
 				e.preventDefault();
-				s.el.fadeIn(100);
-				$(this).fadeOut(100);
+				s.el.show();
+				$(this).hide();
 			});
 
 			if (self.o.clearbutton || self.o.zoombuttons) this.button.css('right', '40px');
@@ -161,13 +161,13 @@ jQuery(document).ready(function($) {
 
 		// show/hide panel
 		this.showPanel = function(s) {
-			s.el.fadeIn(100);
-			s.button.fadeOut(100);
+			s.el.show();
+			s.button.hide();
 		}
 
 		this.hidePanel = function(s) {
-			s.el.fadeOut(100);
-			s.button.fadeIn(100);
+			s.el.hide();
+			s.button.show();
 
 			$('.active', s.el).removeClass('active');
 		}

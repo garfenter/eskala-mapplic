@@ -191,8 +191,9 @@
 				var s = this;
 
 				this.location = null;
-				this.el.stop().hide();
-				if (s.desc) s.desc.empty();
+				this.el.stop().fadeOut(300, function() {
+					if (s.desc) s.desc.empty();
+				});
 			}
 
 			this.limitSize = function() {
@@ -349,7 +350,7 @@
 					if (this.hovertipdesc) this.desc.html(location.description);
 					this.position(location);
 
-					this.el.stop().show();
+					this.el.stop().fadeIn(100);
 				}
 			}
 
@@ -365,7 +366,7 @@
 			}
 
 			this.hide = function() {
-				this.el.stop().hide();
+				this.el.stop().fadeOut(200);
 			}
 		}
 
@@ -499,7 +500,15 @@
 					$(this)[0].style.clip = 'rect(' + top + 'px, ' + right + 'px, ' + bottom + 'px, ' + left + 'px)';
 				});
 
-				this.el.hide();
+				// fade out effect
+				var s = this;
+				this.el.show();
+				this.el.css('opacity', 1.0);
+				clearTimeout(this.opacity);
+				this.opacity = setTimeout(function() {
+					s.el.css('opacity', 0);
+					setTimeout(function() { s.el.hide(); }, 600);
+				}, 2000);
 			}
 		}
 
@@ -568,13 +577,12 @@
 				this.el = $('<div></div>').addClass('mapplic-sidebar').appendTo(self.el);
 
 				if (self.o.search) {
-					this.filter = $('<form></form>').addClass('mapplic-filter').submit(function(e){
-						e.preventDefault();
-						s.search();
-					}).appendTo(this.el);
+					this.filter = $('<div></div>').addClass('mapplic-filter').appendTo(this.el);
 					this.tags = $('<div></div>').addClass('mapplic-filter-tags').appendTo(this.filter);
-					this.input = $('<input>').attr({'type': 'text', 'spellcheck': 'false', 'placeholder': self.loc.search}).addClass('mapplic-search-input').blur(function(e) {
+
+					this.input = $('<input>').attr({'type': 'text', 'spellcheck': 'false', 'placeholder': self.loc.search}).addClass('mapplic-search-input').keyup(function(e) {
 						s.search();
+						if (e.keyCode == 13) $('li > a', s.el).filter(':visible:first').click();
 					}).prependTo(this.filter);
 					self.clear = $('<a></a>').attr('href', '#').addClass('mapplic-search-clear').click(function(e) {
 						e.preventDefault();
@@ -711,8 +719,8 @@
 				var keyword = this.input.val(),
 					s = this;
 				
-				if (keyword) self.clear.show();
-				else self.clear.hide();
+				if (keyword) self.clear.fadeIn(100);
+				else self.clear.fadeOut(100);
 
 				// groups
 				$.each(self.g, function(i, group) {
@@ -721,8 +729,8 @@
 						if (!$.isEmptyObject(s.taglist)) shown = false;
 						else $.each(self.o.searchfields, function(i, field) { if (group[field] && !shown) shown = !(group[field].toLowerCase().indexOf(keyword.toLowerCase()) == -1); });
 
-						if (shown) group.list.show();
-						else group.list.hide();
+						if (shown) group.list.slideDown(200);
+						else group.list.slideUp(200);
 					}
 				});
 
@@ -733,8 +741,8 @@
 						$.each(self.o.searchfields, function(i, field) { if (location[field] && !shown) shown = !(location[field].toLowerCase().indexOf(keyword.toLowerCase()) == -1); });
 						$.each(s.taglist, function(i, tag) { if (!location.category || location.category.indexOf(i) == -1) shown = false; });
 
-						if (shown) location.list.show();
-						else location.list.hide();
+						if (shown) location.list.slideDown(200);
+						else location.list.slideUp(200);
 					}
 				});
 			}
@@ -792,8 +800,8 @@
 			}
 
 			this.update = function(scale) {
-				if (scale == self.fitscale) this.el.stop().hide();
-				else this.el.stop().show();
+				if (scale == self.fitscale) this.el.stop().fadeOut(200);
+				else this.el.stop().fadeIn(200);
 			}
 		}
 
@@ -857,6 +865,13 @@
 					$(document).resize();
 				}).appendTo(self.container.el);
 
+				// esc key
+				$(document).keyup(function(e) {
+					if ((e.keyCode === 27) && $('.mapplic-fullscreen')[0]) {
+						$('.mapplic-element.mapplic-fullscreen').removeClass('mapplic-fullscreen');
+						$(document).resize();
+					}
+				});
 			}
 		}
 
