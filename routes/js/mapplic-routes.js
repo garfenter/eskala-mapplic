@@ -288,7 +288,6 @@ jQuery(document).ready(function($) {
 			}
 
 			// last or only floor
-			MapplicInstance.tooltip.show(MapplicInstance.actualLocation);
 			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid, true);
 		}
 
