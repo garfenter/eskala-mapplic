@@ -289,13 +289,16 @@ jQuery(document).ready(function($) {
 
 			// last or only floor
 			MapplicInstance.tooltip.show(MapplicInstance.actualLocation);
-			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid);
+			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid, true);
 		}
 
-		this.showSubPath = function(subpath, dist, dur, fid) {
+		this.showSubPath = function(subpath, dist, dur, fid, last) {
 			var s = this;
 			var t = setTimeout(function() {
 				self.switchLevel(fid);
+				if(last){
+					MapplicInstance.tooltip.show(MapplicInstance.actualLocation);		
+				}
 				var path = s.drawPath(subpath, dist),
 					bbox = path[0].getBBox();
 			}, dur * 10 / s.o.speed + s.timeouts.length * 600); // 600ms delay
