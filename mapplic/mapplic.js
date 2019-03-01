@@ -31,7 +31,7 @@ var MapplicInstance;
 			closezoomout: true,
 			action: 'default',
 			lightbox: true,
-			hovertip: true,
+			hovertip: false,
 			marker: 'default',
 			fillcolor: null,
 			fullscreen: true,
@@ -397,6 +397,7 @@ var MapplicInstance;
 
 			this.update = function(id) {
 				var url;
+				console.log("HOLA MUNDO");
 				if (typeof window.URL !== 'undefined') {
 					url = new URL(window.location.href);
 					url.searchParams.set(this.param, id);
@@ -685,6 +686,7 @@ var MapplicInstance;
 						routeIcon[0].click();
 					}
 				});
+				location.item = item;
 				var link = $('<a></a>').attr('href', '#').click(function(e) {
 					e.preventDefault();
 					self.showLocation(location.id, 600);
@@ -1181,7 +1183,10 @@ var MapplicInstance;
 
 								// click event
 								$(self.o.selector, this).on('click touchend', function() {
-									if (!self.dragging) self.showLocation($(this).attr('id'), 600);
+									var location = self.l[$(this).attr('id')]; 
+									if (location) {
+										location.item.click();
+									}
 								});
 
 								// autopopulate
@@ -1213,8 +1218,10 @@ var MapplicInstance;
 								});
 
 								$('svg a', this).click(function(e) {
-									var id = $(this).attr('xlink:href').substr(1);
-									self.showLocation(id, 600);
+									var location = self.l[$(this).attr('xlink:href').substr(1)]; 
+									if (location) {
+										location.item.click();
+									}
 									e.preventDefault();
 								});
 
