@@ -679,6 +679,7 @@ var MapplicInstance;
 				var item = $('<li></li>').addClass('mapplic-list-location').attr('data-location', location.id).click(function(e){
 					var routeIcon = $(this).find('.mapplic-routes-icon');
 					if(routeIcon.length > 0) {
+						self.tooltip.hide();
 						e.preventDefault();
 						self.actualLocation = location;
 						routeIcon[0].click();
