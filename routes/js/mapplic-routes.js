@@ -62,8 +62,8 @@ jQuery(document).ready(function($) {
 			this.button = $('<a></a>').attr('href', '#').addClass('mapplic-button mapplic-routes-button').appendTo(self.container.el);
 			this.button.on('click touchstart', function(e) {
 				e.preventDefault();
-				s.el.fadeIn(100);
-				$(this).fadeOut(100);
+				s.el.show();
+				$(this).hide();
 			});
 
 			if (self.o.clearbutton || self.o.zoombuttons) this.button.css('right', '40px');
@@ -88,7 +88,7 @@ jQuery(document).ready(function($) {
 			else this.el.addClass('mapplic-routes-fromfixed');
 
 			this.toselect = $('<div></div>').addClass('mapplic-routes-select').appendTo(this.el);
-			$('<small>Â¿Hacia a dÃ³nde quieres ir?:</small>').appendTo(this.toselect);
+			$('<small>¿Hacia donde quieres ir?</small>').appendTo(this.toselect);
 			$('<div></div').appendTo(this.toselect);
 
 
@@ -161,13 +161,13 @@ jQuery(document).ready(function($) {
 
 		// show/hide panel
 		this.showPanel = function(s) {
-			s.el.fadeIn(100);
-			s.button.fadeOut(100);
+			s.el.show();
+			s.button.hide();
 		}
 
 		this.hidePanel = function(s) {
-			s.el.fadeOut(100);
-			s.button.fadeIn(100);
+			s.el.hide();
+			s.button.show();
 
 			$('.active', s.el).removeClass('active');
 		}
@@ -288,16 +288,18 @@ jQuery(document).ready(function($) {
 			}
 
 			// last or only floor
-			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid);
+			this.showSubPath(path.slice(start, path.length), path[path.length - 1].dist - dist, dist, path[start].fid, true);
 		}
 
-		this.showSubPath = function(subpath, dist, dur, fid) {
+		this.showSubPath = function(subpath, dist, dur, fid, last) {
 			var s = this;
 			var t = setTimeout(function() {
 				self.switchLevel(fid);
+				if(last){
+					MapplicInstance.tooltip.show(MapplicInstance.actualLocation);		
+				}
 				var path = s.drawPath(subpath, dist),
 					bbox = path[0].getBBox();
-				self.moveTo((bbox.x + bbox.width/2) / self.contentWidth, (bbox.y + bbox.height/2) / self.contentHeight, s.bboxZoom(bbox));
 			}, dur * 10 / s.o.speed + s.timeouts.length * 600); // 600ms delay
 			s.timeouts.push(t);
 		}
